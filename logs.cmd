@@ -1,0 +1,1 @@
+call c:\apps\android-sdk\platform-tools\adb logcat CordovaLog:D *:S
