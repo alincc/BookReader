@@ -2,7 +2,7 @@ angular.module('book', ['ionic', 'book.controllers', 'book.services', 'book.dire
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {
-            ionic.Platform.fullScreen();
+            //ionic.Platform.fullScreen();
 
             if (window.cordova && window.cordova.plugins.Keyboard) {
                 cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -12,8 +12,10 @@ angular.module('book', ['ionic', 'book.controllers', 'book.services', 'book.dire
                 StatusBar.hide();
             }
 
-            window.plugins.insomnia.keepAwake();
+            //if (window.plugins.insomnia)
+            //    window.plugins.insomnia.keepAwake();
         });
+
     })
 
     .config(function ($stateProvider, $urlRouterProvider) {

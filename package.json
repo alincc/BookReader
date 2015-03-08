@@ -16,6 +16,7 @@
   },
   "cordovaPlugins": [
     "org.apache.cordova.statusbar",
-    "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git"
+    "https://github.com/EddyVerbruggen/Insomnia-PhoneGap-Plugin.git",
+    "https://github.com/cogitor/PhoneGap-OrientationLock.git"
   ]
 }

@@ -1,10 +1,14 @@
 angular.module('book.controllers', [])
 
-    .controller('AppCtrl', function ($scope) {
+    .controller('AppCtrl', function ($scope, $state, $window, BookService) {
+        BookService.getBook()
+            .success(function(res){
+                $scope.title = res.title;
+            });
     })
 
     .controller('IndexCtrl', function ($scope, BookService) {
-        BookService.readIndex()
+        BookService.getBook()
             .success(function (res) {
                 $scope.chapters = res.chapters;
             });
