@@ -1,15 +1,21 @@
-angular.module('book.services', [])
+(function () {
+    'use strict';
 
-    .factory('BookService', ['$http', '$location', function ($http, $location) {
+    angular.module('book')
+        .factory('BookService', bookService);
+
+    bookService.$inject = ['$http', '$location'];
+
+    function bookService($http, $location) {
         var r = {};
 
         var url = "";
+
         if (ionic.Platform.isAndroid()) {
             url = "/android_asset/www/data/";
         }
 
-        if($location.$$host == '192.168.0.6')
-        {
+        if ($location.$$host == '192.168.0.6') {
             url = "/data/";
         }
 
@@ -22,5 +28,7 @@ angular.module('book.services', [])
         }
 
         return r;
+    }
+})();
 
-    }]);
+

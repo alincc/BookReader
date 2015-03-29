@@ -1,4 +1,4 @@
-angular.module('book', ['ionic', 'book.controllers', 'book.services', 'book.directives'])
+angular.module('book', ['ionic'])
 
     .run(function ($ionicPlatform) {
         $ionicPlatform.ready(function () {

@@ -2,25 +2,9 @@
     margin: 0;
     padding: 0;
     border: 0;
-    color: transparent;
     background-color: transparent;
 
-
-/*
-    -webkit-column-rule-color: red;
-    -webkit-column-rule-style: solid;
-    -webkit-column-rule-width: 0px;
-*/
-
-
     text-indent: 0;
-    font-size: 12.0pt;
+    font-size: 13.0pt;
     font-family: ”Verdana”, ”sans-serif”, serif;
-}
-
-.pageNo {
-    color: #b1b1b1;
-    position: fixed;
-    left: 20px;
-    bottom: -20px;
 }

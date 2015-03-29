@@ -8,10 +8,6 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
-
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
 
@@ -20,9 +16,11 @@
     <script type="text/javascript" src="lib/Insomnia.js"></script>
 
     <script src="js/app.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/directives.js"></script>
+    <script src="js/app.controller.js"></script>
+    <script src="js/book/book.service.js"></script>
+    <script src="js/book/book-index.controller.js"></script>
+    <script src="js/book/chapter.controller.js"></script>
+    <script src="js/book/page.directive.js"></script>
 </head>
 <body ng-app="book">
     <ion-nav-view></ion-nav-view>
