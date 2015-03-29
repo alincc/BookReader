@@ -1,6 +1,8 @@
 Basic skeleton to create ebook for mobile.
 Uses Ionic framework. It supports html files.
 
+![](https://github.com/alincc/BookReader/blob/master/assets/sample.png)
+
 #### Requirements:
 - node
 - ionic
