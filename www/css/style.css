@@ -1,12 +1,26 @@
-.chapter {
-    padding: 60px 20px 25px 20px;
-    -webkit-column-gap: 40px;
-    -webkit-column-width: 100px;
-    -webkit-column-count: 1;
+.page {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: transparent;
+    background-color: transparent;
+
+
+/*
+    -webkit-column-rule-color: red;
+    -webkit-column-rule-style: solid;
+    -webkit-column-rule-width: 0px;
+*/
+
+
+    text-indent: 0;
+    font-size: 12.0pt;
+    font-family: ”Verdana”, ”sans-serif”, serif;
 }
 
 .pageNo {
     color: #b1b1b1;
-    position: absolute;
-    bottom: 7px;
+    position: fixed;
+    left: 20px;
+    bottom: -20px;
 }

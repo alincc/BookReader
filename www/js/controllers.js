@@ -14,7 +14,7 @@ angular.module('book.controllers', [])
             });
     })
 
-    .controller('ChapterCtrl', function ($scope, $stateParams, BookService) {
+    .controller('ChapterCtrl', function ($scope, $stateParams, BookService, $ionicSlideBoxDelegate) {
         BookService.readChapter($stateParams.chapterId)
             .success(function (res) {
                 $scope.chapter = res;

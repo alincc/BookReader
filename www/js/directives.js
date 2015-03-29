@@ -1,116 +1,90 @@
 angular.module('book.directives', [])
 
-    .directive('chapter', [
-        '$ionicGesture', '$timeout', '$window', '$state',
-        function ($ionicGesture, $timeout, $window, $state) {
+    .directive('page', ['$window', '$document', '$ionicGesture', function ($window, $document, $ionicGesture) {
+        var d = {};
 
-            var d = {};
+        d.scope = {
+            content: '@',
+            info: '='
+        };
 
-            d.scope = {
-                content: '@'
-            };
+        d.replace = true;
 
-            d.replace = true;
+        d.template = '<div ng-bind-html="content"></div>';
 
-            d.template = '<div>' +
-            '<div class="content" ng-style="getStyle()" ng-bind-html="content"></div>' +
-            '<div class="pageNo">Page {{currentPage}}/{{totalPages}}</div>' +
-            '</div>';
+        d.link = function (scope, el, attr) {
+            var pageWidth, currentPage = 0, pagesCount = 0;
+            var d = el[0];
 
-            d.link = function (scope, el) {
-                var element = el[0];
-                var contentEl = element.children[0];
-                var viewPortHeight, viewPortWidth, totalHeight, totalWidth, topPosition;
-                var oldViewPortHeight, oldViewPortWidth;
+            scope.info = {};
 
-                var init = function () {
-                    viewPortHeight = oldViewPortHeight = element.clientHeight - 90;
-                    viewPortWidth = oldViewPortWidth = element.clientWidth;
-                    totalWidth = viewPortWidth;
-                    totalHeight = 0;
+            $window.addEventListener('resize', function () {
+                console.debug('resize');
+                calculateSizes();
+                scope.$apply();
+            });
 
-                    updatePages();
-                };
+            scope.$watch('content', function () {
+                calculateSizes();
+            });
 
-                var updatePages = function () {
-                    scope.currentPage = Math.round(Math.abs(topPosition) / viewPortHeight) + 1;
-                    scope.totalPages = Math.ceil(totalHeight / viewPortHeight);
+            $ionicGesture.on('tap', function () {
+                var pageX = event.gesture.center.pageX;
+                var leftSide = pageX < window.innerHeight / 2;
+
+                // Check direction
+                if (leftSide) {
+                    currentPage = setPage(currentPage - 1);
+                }
+                else {
+                    currentPage = setPage(currentPage + 1);
+                }
+            }, el.parent());
+
+            $ionicGesture.on('swipe-left', function () {
+                currentPage = setPage(currentPage - 1);
+            }, el.parent());
+
+            $ionicGesture.on('swipe-right', function () {
+                console.log('sr')
+                currentPage = setPage(currentPage + 1);
+            }, el.parent());
+
+            var setPage = function (pageIndex) {
+                // Validate page
+                if (pageIndex < 0) {
+                    pageIndex = 0;
+                }
+                else if (pageIndex > pagesCount) {
+                    pageIndex = pagesCount;
                 }
 
-                init();
+                var position = -1 * ((pageWidth + 4) * pageIndex);
+                d.style['-webkit-transform'] = 'translate(' + position + 'px, 0px)';
+                d.style['-webkit-transition'] = 'all .5s ease-out';
 
-                $window.addEventListener('resize', function () {
-                    console.debug('resize');
-                    //init();
-                    updatePages();
-                    scope.$apply();
-                });
-
-                scope.getStyle = function () {
-                    return {
-                        "top": topPosition + "px"
-                    };
-                }
-
-                scope.$watchCollection(function () {
-                    return [element.clientHeight, element.clientWidth]
-                }, function (value, prevValue) {
-                    if (angular.equals(value, prevValue)) return;
-                    console.debug('element.clientHeight, element.clientWidth', value);
-
-                    viewPortHeight = value[0] - 90;
-                    viewPortWidth = value[1];
-
-                    updatePages();
-                });
-
-                // Verify client height
-                scope.$watchCollection(function () {
-                    return [contentEl.clientHeight, contentEl.clientWidth]
-                }, function (value, prevValue) {
-                    if (angular.equals(value, prevValue)) return;
-
-                    console.debug('contentEl.clientHeight, contentEl.clientWidth', value);
-                    totalHeight = value[0];
-                    totalWidth = value[1];
-
-                    updatePages();
-                });
-
-                // On content change
-                scope.$watch('content', function (value, prevValue) {
-                    if (angular.equals(value, prevValue)) return;
-
-                    console.debug('content changed')
-                    topPosition = 0;
-                    updatePages();
-                });
-
-                var tapHandle = function (event) {
-                    var pos = event.gesture.center;
-                    console.debug('pos', pos);
-                    // If on first half of page, its a left direction
-                    if (pos.pageX < totalWidth / 2) {
-                        if (topPosition + viewPortHeight < viewPortHeight) {
-                            topPosition = topPosition + viewPortHeight;
-                        }
-                    }
-                    // otherwise its a right direction, check limit
-                    else if (topPosition + totalHeight > viewPortHeight) {
-                        topPosition = topPosition - viewPortHeight;
-                    }
-
-                    updatePages();
-                    scope.$apply();
-                };
-
-                var tapGesture = $ionicGesture.on('tap', tapHandle, el);
-
-                scope.$on('$destroy', function () {
-                    $ionicGesture.off(tapGesture, 'tap', tapHandle);
-                })
+                scope.info.currentPage = pageIndex;
+                return pageIndex;
             }
 
-            return d;
+            var calculateSizes = function () {
+                pagesCount = Math.ceil(d.offsetHeight / window.innerHeight) + 1;
+                scope.info.pagesCount = pagesCount;
 
-        }]);
+                setTimeout(function () {
+                    pageWidth = window.innerWidth;
+                    console.log(pageWidth);
+                    d.style.color = 'inherit';
+                    d.style.height = d.innerHeight + 'px';
+                    d.style.width =  (pageWidth * (pagesCount +1)) + 'px';
+                    d.style.margin = 0;
+                    d.style.webkitColumnGap = '40px';
+                    d.style.webkitColumnCount = pagesCount + 1;
+                    d.style.webkitColumnWidth = (pageWidth - 40) + 'px';
+
+                }, 2000);
+            }
+        };
+
+        return d;
+    }])

@@ -1,6 +1,6 @@
-<!--<ion-view view-title="{{::title}}">
-    <ion-pane>-->
-            <chapter class="chapter" id="chapter" content="{{::chapter}}">
-            </chapter>
-    <!--</ion-pane>
-</ion-view>-->
+<ion-view view-title="{{::title}}" style="position: relative">
+    <div style="position:relative;margin-top:60px;padding:20px;">
+        <page id="chapter" class="page" info="info" content="{{::chapter}}"></page>
+    </div>
+    <div class="pageNo">{{info.currentPage+1}}/{{info.pagesCount}}</div>
+</ion-view>
