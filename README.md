@@ -1,7 +1,7 @@
+![](https://github.com/alincc/BookReader/blob/master/assets/sample.png)
+
 Basic skeleton to create ebook for mobile.
 Uses Ionic framework. It supports html files.
-
-![](https://github.com/alincc/BookReader/blob/master/assets/sample.png)
 
 #### Requirements:
 - node
@@ -9,7 +9,6 @@ Uses Ionic framework. It supports html files.
 
 
 #### Getting Started
-
 - Copy html content to data/ folder
 - Update book.json with chapters structure
 - Compile with ionic: ionic build android.
